@@ -43,18 +43,24 @@
                                 <ColumnDefinition SharedSizeGroup="Toggle"/>
                                 <ColumnDefinition SharedSizeGroup="Duration"/>
                                 <ColumnDefinition SharedSizeGroup="Notes"/>
+                                <ColumnDefinition SharedSizeGroup="Notes"/>
+                                <ColumnDefinition SharedSizeGroup="Notes"/>
+                                <ColumnDefinition SharedSizeGroup="Notes"/>
                             </Grid.ColumnDefinitions>
                             <TextBlock Grid.Column="0" Text="Name" Style="{StaticResource TextBlockBoldStyle}"/>
-                            <!-- Empty TreeViewItem to measure the size of its ToggleButton into the "Toggle" group-->
                             <TreeViewItem Grid.Column="1" Padding="0"/>
-                            <TextBlock Grid.Column="3" Text="Duration" Style="{StaticResource TextBlockBoldStyle}"/>
-                            <TextBlock Grid.Column="4" Text="Notes" Style="{StaticResource TextBlockBoldStyle}"/>
+                            <TextBlock Grid.Column="2" Text="Creation Date" Style="{StaticResource TextBlockBoldStyle}"/>
+                            <TextBlock Grid.Column="3" Text="Modification Time" Style="{StaticResource TextBlockBoldStyle}"/>
+                            <TextBlock Grid.Column="4" Text="LastAccess Time" Style="{StaticResource TextBlockBoldStyle}"/>
+                            <TextBlock Grid.Column="5" Text="Attributes" Style="{StaticResource TextBlockBoldStyle}"/>
+                            <TextBlock Grid.Column="6" Text="Owner" Style="{StaticResource TextBlockBoldStyle}"/>
+                            <TextBlock Grid.Column="7" Text="Permissions" Style="{StaticResource TextBlockBoldStyle}"/>
                         </Grid>
                     </TreeViewItem.Header>
                 </TreeViewItem>
 
                 <!-- Data rows -->
-                <TreeView x:Name="filesTree" Grid.Row="1" ItemsSource="{Binding SubItems}" BorderBrush="Gray" BorderThickness="0 0 0 0" Margin="0.5,0.5,0.5,0.5">
+                <TreeView x:Name="FilesTree" Grid.Row="1" ItemsSource="{Binding SubItems}" BorderBrush="Gray" BorderThickness="0 0 0 0" Margin="0.5,0.5,0.5,0.5">
                     <TreeView.ItemTemplate>
 
                         <!-- Level 0 template leaves space for 2 child "Toggle" levels -->
@@ -66,10 +72,17 @@
                                     <ColumnDefinition SharedSizeGroup="Toggle"/>
                                     <ColumnDefinition SharedSizeGroup="Duration"/>
                                     <ColumnDefinition SharedSizeGroup="Notes"/>
+                                    <ColumnDefinition SharedSizeGroup="Notes"/>
+                                    <ColumnDefinition SharedSizeGroup="Notes"/>
+                                    <ColumnDefinition SharedSizeGroup="Notes"/>
                                 </Grid.ColumnDefinitions>
                                 <TextBlock Grid.Column="0" Text="{Binding Name}" Style="{StaticResource TextBlockStyle}"/>
-                                <TextBlock Grid.Column="3" Text="{Binding Duration}" Style="{StaticResource TextBlockStyle}"/>
-                                <TextBlock Grid.Column="4" Text="{Binding Notes}" Style="{StaticResource TextBlockStyle}"/>
+                                <TextBlock Grid.Column="2" Text="{Binding CreationDate}" Style="{StaticResource TextBlockStyle}"/>
+                                <TextBlock Grid.Column="3" Text="{Binding ModificationTime}" Style="{StaticResource TextBlockStyle}"/>
+                                <TextBlock Grid.Column="4" Text="{Binding LastAccessTime}" Style="{StaticResource TextBlockStyle}"/>
+                                <TextBlock Grid.Column="5" Text="{Binding Attributes}" Style="{StaticResource TextBlockStyle}"/>
+                                <TextBlock Grid.Column="6" Text="{Binding Owner}" Style="{StaticResource TextBlockStyle}"/>
+                                <TextBlock Grid.Column="7" Text="{Binding Permissions}" Style="{StaticResource TextBlockStyle}"/>
                             </Grid>
 
                             <!-- Level 1 template leaves space for 1 child "Toggle" level -->
@@ -78,14 +91,21 @@
                                     <Grid>
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition SharedSizeGroup="Task"/>
-                                            <ColumnDefinition/>
+                                            <ColumnDefinition SharedSizeGroup="Toggle"/>
                                             <ColumnDefinition SharedSizeGroup="Toggle"/>
                                             <ColumnDefinition SharedSizeGroup="Duration"/>
                                             <ColumnDefinition SharedSizeGroup="Notes"/>
+                                            <ColumnDefinition SharedSizeGroup="Notes"/>
+                                            <ColumnDefinition SharedSizeGroup="Notes"/>
+                                            <ColumnDefinition SharedSizeGroup="Notes"/>
                                         </Grid.ColumnDefinitions>
                                         <TextBlock Grid.Column="0" Text="{Binding Name}" Style="{StaticResource TextBlockStyle}"/>
-                                        <TextBlock Grid.Column="3" Text="{Binding Duration}" Style="{StaticResource TextBlockStyle}"/>
-                                        <TextBlock Grid.Column="4" Text="{Binding Notes}" Style="{StaticResource TextBlockStyle}"/>
+                                        <TextBlock Grid.Column="2" Text="{Binding CreationDate}" Style="{StaticResource TextBlockStyle}"/>
+                                        <TextBlock Grid.Column="3" Text="{Binding ModificationTime}" Style="{StaticResource TextBlockStyle}"/>
+                                        <TextBlock Grid.Column="4" Text="{Binding LastAccessTime}" Style="{StaticResource TextBlockStyle}"/>
+                                        <TextBlock Grid.Column="5" Text="{Binding Attributes}" Style="{StaticResource TextBlockStyle}"/>
+                                        <TextBlock Grid.Column="6" Text="{Binding Owner}" Style="{StaticResource TextBlockStyle}"/>
+                                        <TextBlock Grid.Column="7" Text="{Binding Permissions}" Style="{StaticResource TextBlockStyle}"/>
                                     </Grid>
 
                                     <!-- Level 2 template has no children -->
@@ -94,14 +114,21 @@
                                             <Grid>
                                                 <Grid.ColumnDefinitions>
                                                     <ColumnDefinition SharedSizeGroup="Task"/>
-                                                    <ColumnDefinition/>
-                                                    <ColumnDefinition/>
+                                                    <ColumnDefinition SharedSizeGroup="Toggle"/>
+                                                    <ColumnDefinition SharedSizeGroup="Toggle"/>
                                                     <ColumnDefinition SharedSizeGroup="Duration"/>
+                                                    <ColumnDefinition SharedSizeGroup="Notes"/>
+                                                    <ColumnDefinition SharedSizeGroup="Notes"/>
+                                                    <ColumnDefinition SharedSizeGroup="Notes"/>
                                                     <ColumnDefinition SharedSizeGroup="Notes"/>
                                                 </Grid.ColumnDefinitions>
                                                 <TextBlock Grid.Column="0" Text="{Binding Name}" Style="{StaticResource TextBlockStyle}"/>
-                                                <TextBlock Grid.Column="3" Text="{Binding Duration}" Style="{StaticResource TextBlockStyle}"/>
-                                                <TextBlock Grid.Column="4" Text="{Binding Notes}" Style="{StaticResource TextBlockStyle}"/>
+                                                <TextBlock Grid.Column="2" Text="{Binding CreationDate}" Style="{StaticResource TextBlockStyle}"/>
+                                                <TextBlock Grid.Column="3" Text="{Binding ModificationTime}" Style="{StaticResource TextBlockStyle}"/>
+                                                <TextBlock Grid.Column="4" Text="{Binding LastAccessTime}" Style="{StaticResource TextBlockStyle}"/>
+                                                <TextBlock Grid.Column="5" Text="{Binding Attributes}" Style="{StaticResource TextBlockStyle}"/>
+                                                <TextBlock Grid.Column="6" Text="{Binding Owner}" Style="{StaticResource TextBlockStyle}"/>
+                                                <TextBlock Grid.Column="7" Text="{Binding Permissions}" Style="{StaticResource TextBlockStyle}"/>
                                             </Grid>
                                         </HierarchicalDataTemplate>
                                     </HierarchicalDataTemplate.ItemTemplate>

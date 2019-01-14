@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
+using System.Security.AccessControl;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
@@ -11,9 +13,26 @@ namespace File_Watcher
 {
     public class FileSystemItem
     {
-        public string Name { get; set; }
-        public double Duration { get; set; }
-        public string Notes { get; set; }
+        public static FileSystemItem FromDirectory (FileSystemEntity entity) {
+            return new FileSystemItem {
+                Name = entity.Name,
+                CreationDate = entity.CreationDate,
+                ModificationTime = entity.CreationDate,
+                LastAccessTime = entity.LastAccessTime,
+                Attributes = entity.Attributes,
+                Owner = entity.Owner,
+                Permissions = entity.Permissions,
+            };
+        }
+
+        public string Name { get; private set; }
+        public FileSystemType Type { get; private set; }
+        public DateTime CreationDate { get; set; }
+        public DateTime ModificationTime { get; set; }
+        public DateTime LastAccessTime { get; set; }
+        public FileAttributes Attributes { get; set; }
+        public string Owner { get; set; }
+        public FileSystemRights Permissions { get; set; }
         public ObservableCollection<FileSystemItem> SubItems { get; set; }
 
         public FileSystemItem()
@@ -68,14 +87,14 @@ namespace File_Watcher
             {
                 if (_rootStore.TryGetValue(x.ParentId, out FileSystemItem node))
                 {
-                    var newNode = new FileSystemItem {Name = x.Name, Duration = x.Type.GetHashCode()};
+                    var newNode = FileSystemItem.FromDirectory(x);
                     node.SubItems.Add(newNode);
                     if (x.Type == FileSystemType.Directory)
                         _rootStore.Add(x.Id, newNode);
                 }
                 else
                 {
-                    var newNode = new FileSystemItem {Name = x.Name, Duration = x.Type.GetHashCode()};
+                    var newNode = FileSystemItem.FromDirectory(x);
                     _nodes.Add(newNode);
                     if (x.Type == FileSystemType.Directory)
                         _rootStore.Add(x.Id, newNode);
@@ -114,7 +133,7 @@ namespace File_Watcher
 
             _nodes = new ObservableCollection<FileSystemItem>();
 
-            filesTree.ItemsSource = _nodes;
+            FilesTree.ItemsSource = _nodes;
         }
 
         private void MenuItem_Click(object sender, RoutedEventArgs e)
@@ -124,6 +143,7 @@ namespace File_Watcher
             if (dialogResult == System.Windows.Forms.DialogResult.OK)
             {
                 _nodes.Clear();
+                _disposable?.Dispose();
                 var fileWatcher = new FileWatcher(openDialog.SelectedPath);
                 _disposable = fileWatcher.Subscribe(new FileConsumer(_nodes, new UiLogger(LogContainer)));
                 fileWatcher.Publish();

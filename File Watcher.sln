@@ -7,8 +7,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "File Watcher", "File Watche
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReactivePlatform", "Ractive Platform\ReactivePlatform.csproj", "{8D2A9C37-DAEF-4296-9233-41F449A45E33}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileWatcher.UnitTests", "FileWatcher.UnitTests\FileWatcher.UnitTests.csproj", "{4A25212E-7A89-4A38-99BB-CAB65B00C72E}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileWatcher.Console", "FileWatcher.Console\FileWatcher.Console.csproj", "{C042EEEC-742D-4873-96F0-43DA8F09AFC9}"
 EndProject
 Global
@@ -25,10 +23,6 @@ Global
 		{8D2A9C37-DAEF-4296-9233-41F449A45E33}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8D2A9C37-DAEF-4296-9233-41F449A45E33}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8D2A9C37-DAEF-4296-9233-41F449A45E33}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4A25212E-7A89-4A38-99BB-CAB65B00C72E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4A25212E-7A89-4A38-99BB-CAB65B00C72E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4A25212E-7A89-4A38-99BB-CAB65B00C72E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4A25212E-7A89-4A38-99BB-CAB65B00C72E}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C042EEEC-742D-4873-96F0-43DA8F09AFC9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C042EEEC-742D-4873-96F0-43DA8F09AFC9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C042EEEC-742D-4873-96F0-43DA8F09AFC9}.Release|Any CPU.ActiveCfg = Release|Any CPU

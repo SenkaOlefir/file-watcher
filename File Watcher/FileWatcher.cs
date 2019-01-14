@@ -1,6 +1,10 @@
 ﻿using RactivePlatform;
 using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using System.Security.AccessControl;
+using System.Security.Principal;
 using System.Threading;
 
 namespace File_Watcher
@@ -13,26 +17,36 @@ namespace File_Watcher
 
     public struct FileSystemEntity
     {
-        public FileSystemEntity(int id, int parentId, string name, FileSystemType type) : this()
-        {
-            Id = id;
-            ParentId = parentId;
-            Name = name;
-            Type = type;
-        }
-
-        public static FileSystemEntity FromDirectory(DirectoryInfo directory)
+        public static FileSystemEntity FromDirectory(DirectoryInfo directory, int id, int parentId)
         {
             return new FileSystemEntity
             {
+                Id = id,
+                ParentId = parentId,
                 Name = directory.Name,
                 CreationDate = directory.CreationTime,
-                ModificationType = directory.LastWriteTime,
-                LastAccessType = directory.LastAccessTime,
-                LastAccessType = directory.LastAccessTime,
+                ModificationTime = directory.LastWriteTime,
+                LastAccessTime = directory.LastAccessTime,
                 Attributes = directory.Attributes,
-                Owner = System.IO.File.GetAccessControl(directory.FullName).GetOwner(typeof(System.Security.Principal.NTAccount)).ToString(),
-                Owner = directory.GetAccessControl()
+                Owner = File.GetAccessControl(directory.FullName).GetOwner(typeof(NTAccount)).ToString(),
+                Permissions = DirectoryHasPermission(directory.FullName),
+                Type = FileSystemType.Directory
+            };
+        }
+
+        public static FileSystemEntity FromFile(FileInfo fileInfo, int parentId)
+        {
+            return new FileSystemEntity
+            {
+                ParentId = parentId,
+                Name = fileInfo.Name,
+                CreationDate = fileInfo.CreationTime,
+                ModificationTime = fileInfo.LastWriteTime,
+                LastAccessTime = fileInfo.LastAccessTime,
+                Attributes = fileInfo.Attributes,
+                Owner = File.GetAccessControl(fileInfo.FullName).GetOwner(typeof(NTAccount)).ToString(),
+                Permissions = DirectoryHasPermission(fileInfo.FullName),
+                Type = FileSystemType.File
             };
         }
 
@@ -40,6 +54,30 @@ namespace File_Watcher
         public int ParentId { get; private set; }
         public string Name { get; private set; }
         public FileSystemType Type { get; private set; }
+        public DateTime CreationDate { get; set; }
+        public DateTime ModificationTime { get; set; }
+        public DateTime LastAccessTime { get; set; }
+        public FileAttributes Attributes { get; set; }
+        public string Owner { get; set; }
+        public FileSystemRights Permissions { get; set; }
+
+        public static FileSystemRights DirectoryHasPermission(string directoryPath)
+        {
+            FileSystemRights rights = 0x0;
+            AuthorizationRuleCollection rules = Directory.GetAccessControl(directoryPath)
+                .GetAccessRules(true, true, typeof(SecurityIdentifier));
+            WindowsIdentity identity = WindowsIdentity.GetCurrent();
+
+            foreach (FileSystemAccessRule rule in rules)
+            {
+                if (identity.Groups != null && identity.Groups.Contains(rule.IdentityReference))
+                {
+                    rights |= rule.FileSystemRights;
+                }
+            }
+
+            return rights;
+        }
     }
 
     public class FileWatcher : BroadcastObservable<FileSystemEntity>
@@ -75,8 +113,8 @@ namespace File_Watcher
                     }
 
                     id++;
-                    var info = new DirectoryInfo(item);
-                    EnqueueNext(new FileSystemEntity(id, parentId, info.Name, FileSystemType.Directory));
+                    var directoryInfo = new DirectoryInfo(item);
+                    EnqueueNext(FileSystemEntity.FromDirectory(directoryInfo, id, parentId));
                     BrowseDirectory(item, id, ref id);
                 }
 
@@ -87,7 +125,8 @@ namespace File_Watcher
                         break;
                     }
 
-                    EnqueueNext(new FileSystemEntity(0, parentId, new FileInfo(fileItem).Name, FileSystemType.File));
+                    var fileInfo = new FileInfo(fileItem);
+                    EnqueueNext(FileSystemEntity.FromFile(fileInfo, parentId));
                 }
             }
             catch (Exception ex)
