@@ -5,7 +5,7 @@ VisualStudioVersion = 15.0.28307.271
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "File Watcher", "File Watcher\File Watcher.csproj", "{FB1C3F56-3B68-42F6-A755-165FE74EA319}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RactivePlatform", "Ractive Platform\RactivePlatform.csproj", "{8D2A9C37-DAEF-4296-9233-41F449A45E33}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReactivePlatform", "Ractive Platform\ReactivePlatform.csproj", "{8D2A9C37-DAEF-4296-9233-41F449A45E33}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileWatcher.UnitTests", "FileWatcher.UnitTests\FileWatcher.UnitTests.csproj", "{4A25212E-7A89-4A38-99BB-CAB65B00C72E}"
 EndProject

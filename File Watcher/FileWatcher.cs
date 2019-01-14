@@ -10,6 +10,7 @@ namespace File_Watcher
         File = 0,
         Directory = 1
     }
+
     public struct FileSystemEntity
     {
         public FileSystemEntity(int id, int parentId, string name, FileSystemType type) : this()
@@ -20,32 +21,46 @@ namespace File_Watcher
             Type = type;
         }
 
-        public int Id { get; }
-        public int ParentId { get; }
-        public string Name { get; }
-        public FileSystemType Type { get; }
+        public static FileSystemEntity FromDirectory(DirectoryInfo directory)
+        {
+            return new FileSystemEntity
+            {
+                Name = directory.Name,
+                CreationDate = directory.CreationTime,
+                ModificationType = directory.LastWriteTime,
+                LastAccessType = directory.LastAccessTime,
+                LastAccessType = directory.LastAccessTime,
+                Attributes = directory.Attributes,
+                Owner = System.IO.File.GetAccessControl(directory.FullName).GetOwner(typeof(System.Security.Principal.NTAccount)).ToString(),
+                Owner = directory.GetAccessControl()
+            };
+        }
+
+        public int Id { get; private set; }
+        public int ParentId { get; private set; }
+        public string Name { get; private set; }
+        public FileSystemType Type { get; private set; }
     }
 
-    public class FileWatcher : BroadcastObservable<FileSystemEntity>, IBroadcastObservable<FileSystemEntity>
+    public class FileWatcher : BroadcastObservable<FileSystemEntity>
     {
-        private Lazy<CompositeObservableDisposer<FileSystemEntity>> disposer;
- 
-
         private readonly string _path;
+        private readonly Lazy<CompositeObservableDisposer<FileSystemEntity>> _disposer;
 
         public FileWatcher(string path)
         {
             _path = path;
+            _disposer = new Lazy<CompositeObservableDisposer<FileSystemEntity>>(() =>
+                new CompositeObservableDisposer<FileSystemEntity>(this));
 
             WorkingThread = new Thread(new ThreadStart(PublishInternal));
-            disposer = new Lazy<CompositeObservableDisposer<FileSystemEntity>>(() => new CompositeObservableDisposer<FileSystemEntity>(this));
         }
 
         public override IDisposable Subscribe(IObserver<FileSystemEntity> observer)
         {
             Subscribers.Add(new ObserverWrapper(observer));
 
-            return disposer.Value;
+            return _disposer.Value;
         }
 
         private void BrowseDirectory(string directoryPath, int parentId, ref int id)
@@ -56,11 +71,12 @@ namespace File_Watcher
                 {
                     if (State == ObservableState.Stopping)
                     {
-                        EnqueueLast();
                         break;
                     }
+
                     id++;
-                    EnqueueNext(new FileSystemEntity(id, parentId, new DirectoryInfo(item).Name, FileSystemType.Directory));
+                    var info = new DirectoryInfo(item);
+                    EnqueueNext(new FileSystemEntity(id, parentId, info.Name, FileSystemType.Directory));
                     BrowseDirectory(item, id, ref id);
                 }
 
@@ -68,9 +84,9 @@ namespace File_Watcher
                 {
                     if (State == ObservableState.Stopping)
                     {
-                        EnqueueLast();
                         break;
                     }
+
                     EnqueueNext(new FileSystemEntity(0, parentId, new FileInfo(fileItem).Name, FileSystemType.File));
                 }
             }

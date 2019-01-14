@@ -99,9 +99,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Ractive Platform\RactivePlatform.csproj">
+    <ProjectReference Include="..\Ractive Platform\ReactivePlatform.csproj">
       <Project>{8d2a9c37-daef-4296-9233-41f449a45e33}</Project>
-      <Name>RactivePlatform</Name>
+      <Name>ReactivePlatform</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
