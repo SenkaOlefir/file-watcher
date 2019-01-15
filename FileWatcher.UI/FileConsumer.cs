@@ -37,11 +37,11 @@ namespace FileWatcher.UI
 
         public void OnError(Exception error)
         {
+            //{DateTime.Now} will make an additional allocation in heap
+            //we need write {DateTime.Now.ToString()} to avoid it
             System.Windows.Application.Current.Dispatcher.BeginInvoke(
                 new Action(delegate { _logger.Error($"{DateTime.Now} - en error occured with message", error); }),
                 DispatcherPriority.ApplicationIdle);
-            //{DateTime.Now} will make an additional allocation in heap
-            //we need write {DateTime.Now.ToString()} to avoid it
         }
 
         public void OnCompleted()

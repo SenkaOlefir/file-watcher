@@ -6,15 +6,15 @@ namespace ReactivePlatform
     [DebuggerStepThrough]
     public class Observer<T> : IObserver<T>
     {
-        private readonly Action<T> onNext;
-        private readonly Action<Exception> onError;
-        private readonly Action onCompleted;
+        private readonly Action<T> _onNext;
+        private readonly Action<Exception> _onError;
+        private readonly Action _onCompleted;
 
         internal Observer(Action<T> onNext, Action<Exception> onError, Action onCompleted)
         {
-            this.onNext = onNext;
-            this.onError = onError;
-            this.onCompleted = onCompleted;
+            _onNext = onNext;
+            _onError = onError;
+            _onCompleted = onCompleted;
         }
 
         public static IObserver<T> Create(Action<T> onNext)
@@ -23,10 +23,10 @@ namespace ReactivePlatform
         public static IObserver<T> Create(Action<T> onNext, Action<Exception> onError, Action onCompleted)
            => new Observer<T>(onNext, onError, onCompleted);
 
-        public void OnCompleted() => onCompleted?.Invoke();
+        public void OnCompleted() => _onCompleted?.Invoke();
 
-        public void OnError(Exception error) => onError?.Invoke(error);
+        public void OnError(Exception error) => _onError?.Invoke(error);
 
-        public void OnNext(T value) => onNext?.Invoke(value);
+        public void OnNext(T value) => _onNext?.Invoke(value);
     }
 }

@@ -62,14 +62,25 @@ namespace FileWatcher
 
         public override void Publish()
         {
-            WorkingThread.Start();
+            switch (State)
+            {
+                case ObservableState.Disposed:
+                    throw new ObjectDisposedException("All observers already disposed");
+                case ObservableState.Producing:
+                    throw new PublishingStartedException("Publishing already started");
+                default:
+                    WorkingThread.Start();
+                    break;
+            }
         }
 
         private void PublishInternal()
         {
+            State = ObservableState.Producing;
             int id = 0;
             BrowseDirectory(_path, -1, ref id);
             EnqueueLast();
+            State = ObservableState.Waiting;
         }
     }
 }

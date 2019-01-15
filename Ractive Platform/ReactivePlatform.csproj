@@ -51,6 +51,7 @@
     <Compile Include="Observer.cs" />
     <Compile Include="ObserverWrapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="PublishingStartedException.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

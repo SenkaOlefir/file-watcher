@@ -26,6 +26,7 @@ namespace FileWatcher.UI
         {
             string name = XmlConvert.EncodeName(entity.Name);
             var element = new XElement(XName.Get(name));
+            //we can put more info to file
             element.Add(new XAttribute("Owner", entity.Owner));
             element.Add(new XAttribute("LastAccessTime", entity.LastAccessTime));
             return element;
@@ -41,6 +42,7 @@ namespace FileWatcher.UI
 
         public void OnError(Exception error)
         {
+            //do nothing
         }
 
         public void OnCompleted()
