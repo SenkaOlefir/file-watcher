@@ -32,7 +32,7 @@ namespace ReactivePlatform
             public ObserverWrapper(IObserver<T> observer)
             {
                 _observer = observer;
-                _workingThread = new Thread(new ThreadStart(StartExecution));
+                _workingThread = new Thread(StartExecution);
                 _workingThread.Start();
             }
 

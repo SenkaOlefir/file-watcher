@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows.Threading;
 
-namespace File_Watcher
+namespace FileWatcher.UI
 {
     public class FileConsumer : IObserver<FileSystemEntity>
     {

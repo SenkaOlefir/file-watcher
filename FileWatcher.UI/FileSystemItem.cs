@@ -3,7 +3,7 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Security.AccessControl;
 
-namespace File_Watcher
+namespace FileWatcher.UI
 {
     public class FileSystemItem
     {

@@ -3,7 +3,7 @@ using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Forms;
 
-namespace File_Watcher
+namespace FileWatcher.UI
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -30,7 +30,7 @@ namespace File_Watcher
             {
                 _nodes.Clear();
                 _disposable?.Dispose();
-                var fileWatcher = new FileWatcher(openDialog.SelectedPath);
+                var fileWatcher = new FileWatcherObservable(openDialog.SelectedPath);
                 _disposable = fileWatcher.Subscribe(new FileConsumer(_nodes, new UiLogger(LogContainer)));
                 fileWatcher.Publish();
             }

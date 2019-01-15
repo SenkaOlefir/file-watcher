@@ -2,7 +2,7 @@
 using System.Windows.Controls;
 using System.Windows.Documents;
 
-namespace File_Watcher
+namespace FileWatcher.UI
 {
     public interface ILog
     {
