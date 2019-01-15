@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace RactivePlatform
+namespace ReactivePlatform
 {
     public interface IBroadcastObservable<T> : IObservable<T>
     {

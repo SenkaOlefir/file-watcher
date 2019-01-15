@@ -7,8 +7,8 @@
     <ProjectGuid>{8D2A9C37-DAEF-4296-9233-41F449A45E33}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Ractive_Platform</RootNamespace>
-    <AssemblyName>Ractive Platform</AssemblyName>
+    <RootNamespace>ReactivePlatform</RootNamespace>
+    <AssemblyName>ReactivePlatform</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 
-namespace RactivePlatform
+namespace ReactivePlatform
 {
     [DebuggerStepThrough]
     public class Observer<T> : IObserver<T>

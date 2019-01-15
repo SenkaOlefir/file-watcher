@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 
-namespace RactivePlatform
+namespace ReactivePlatform
 {
     [DebuggerStepThrough]
     public static class EnumerableExtension

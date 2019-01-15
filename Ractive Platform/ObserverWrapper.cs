@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Threading;
 
-namespace RactivePlatform
+namespace ReactivePlatform
 {
     public abstract partial class Observable<T>
     {

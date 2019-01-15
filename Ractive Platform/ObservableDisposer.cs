@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace RactivePlatform
+namespace ReactivePlatform
 {
     public class ObservableDisposer<T> : IDisposable
     {

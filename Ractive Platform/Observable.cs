@@ -1,8 +1,7 @@
 ﻿using System;
-using System.Linq;
 using System.Threading;
 
-namespace RactivePlatform
+namespace ReactivePlatform
 {
     public abstract partial class Observable<T> : IObservable<T>
     {

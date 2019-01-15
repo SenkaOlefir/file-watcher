@@ -1,4 +1,4 @@
-﻿namespace RactivePlatform
+﻿namespace ReactivePlatform
 {
     public class Cancellation
     {
