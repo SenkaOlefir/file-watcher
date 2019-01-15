@@ -32,6 +32,7 @@ namespace FileWatcher.UI
                 _disposable?.Dispose();
                 var fileWatcher = new FileWatcherObservable(openDialog.SelectedPath);
                 _disposable = fileWatcher.Subscribe(new FileConsumer(_nodes, new UiLogger(LogContainer)));
+                _disposable = fileWatcher.Subscribe(new FileXmlConsumer("D:/File.xml"));
                 fileWatcher.Publish();
             }
         }

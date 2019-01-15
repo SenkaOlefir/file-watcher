@@ -58,6 +58,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="FileXmlConsumer.cs" />
     <Compile Include="FileConsumer.cs" />
     <Compile Include="UiLogger.cs" />
     <Page Include="MainWindow.xaml">

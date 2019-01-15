@@ -19,23 +19,20 @@ namespace FileWatcher.UI
 
         public void OnNext(FileSystemEntity x)
         {
-            System.Windows.Application.Current.Dispatcher.BeginInvoke(new Action(delegate
-            {
-                if (_rootStore.TryGetValue(x.ParentId, out FileSystemItem node))
+            System.Windows.Application.Current.Dispatcher.BeginInvoke(
+                new Action(delegate
                 {
-                    var newNode = FileSystemItem.FromDirectory(x);
-                    node.SubItems.Add(newNode);
-                    if (x.Type == FileSystemType.Directory)
-                        _rootStore.Add(x.Id, newNode);
-                }
-                else
-                {
-                    var newNode = FileSystemItem.FromDirectory(x);
-                    _nodes.Add(newNode);
-                    if (x.Type == FileSystemType.Directory)
-                        _rootStore.Add(x.Id, newNode);
-                }
-            }), DispatcherPriority.ApplicationIdle);
+                    AddNode(_rootStore.TryGetValue(x.ParentId, out FileSystemItem node) ? node.SubItems : _nodes,
+                        x);
+                }), DispatcherPriority.ApplicationIdle);
+        }
+
+        private void AddNode(ObservableCollection<FileSystemItem> collection, FileSystemEntity entity)
+        {
+            var newNode = FileSystemItem.FromEntity(entity);
+            collection.Add(newNode);
+            if (entity.Type == FileSystemType.Directory)
+                _rootStore.Add(entity.Id, newNode);
         }
 
         public void OnError(Exception error)

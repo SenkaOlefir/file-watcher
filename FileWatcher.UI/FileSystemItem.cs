@@ -7,7 +7,7 @@ namespace FileWatcher.UI
 {
     public class FileSystemItem
     {
-        public static FileSystemItem FromDirectory(FileSystemEntity entity)
+        public static FileSystemItem FromEntity(FileSystemEntity entity)
         {
             return new FileSystemItem
             {
@@ -31,7 +31,7 @@ namespace FileWatcher.UI
         public FileSystemRights Permissions { get; set; }
         public ObservableCollection<FileSystemItem> SubItems { get; set; }
 
-        public FileSystemItem()
+        private FileSystemItem()
         {
             SubItems = new ObservableCollection<FileSystemItem>();
         }
