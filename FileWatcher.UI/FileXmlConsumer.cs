@@ -45,7 +45,7 @@ namespace FileWatcher.UI
 
         public void OnCompleted()
         {
-            using (var fileStream = new FileStream(_fileName, FileMode.OpenOrCreate, FileAccess.Write))
+            using (var fileStream = new FileStream(_fileName, FileMode.Create, FileAccess.Write))
             {
                 _document.Save(fileStream);
             }
