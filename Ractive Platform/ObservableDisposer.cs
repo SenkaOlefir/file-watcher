@@ -11,6 +11,8 @@ namespace ReactivePlatform
             _observable = observable;
         }
 
+        //Is's not correct implemenration of disposable pattern
+        //We should use protected disposable method and suppress finalization after disposing
         public void Dispose()
         {
             _observable.StopProducing();

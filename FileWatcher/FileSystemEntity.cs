@@ -68,7 +68,14 @@ namespace FileWatcher
             {
                 if (identity.Groups != null && identity.Groups.Contains(rule.IdentityReference))
                 {
-                    rights |= rule.FileSystemRights;
+                    if ((rights & 0x0) == 0) //check if flag not set
+                    {
+                        rights = rule.FileSystemRights;
+                    }
+                    else
+                    {
+                        rights |= rule.FileSystemRights;
+                    }
                 }
             }
 

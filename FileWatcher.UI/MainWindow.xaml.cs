@@ -37,12 +37,12 @@ namespace FileWatcher.UI
                 if (saveDialogResult == DialogBoxResult.OK)
                 {
                     _nodes.Clear();
-                    //we actually don't need to dispose observers after 
+                    //we actually don't need to dispose observers after sequence will completed
                     _disposable?.Dispose();
                     var fileWatcher = new FileWatcherObservable(_folderBrowserDialog.SelectedPath);
-                    _disposable = fileWatcher.Subscribe(new FileConsumer(_nodes, new UiLogger(LogContainer)));
-                    _disposable = fileWatcher.Subscribe(new FileXmlConsumer(_saveFileDialog.FileName));
-                    fileWatcher.Publish();
+                    fileWatcher.Subscribe(new FileUIConsumer(_nodes, new UiLogger(LogContainer)));
+                    fileWatcher.Subscribe(new FileXmlConsumer(_saveFileDialog.FileName));
+                    _disposable = fileWatcher.Publish();
                 }
             }
         }

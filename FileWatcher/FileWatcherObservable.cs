@@ -8,6 +8,7 @@ namespace FileWatcher
     public class FileWatcherObservable : BroadcastObservable<FileSystemEntity>
     {
         private readonly string _path;
+        private readonly object _lock = new object();
         private readonly Lazy<CompositeObservableDisposer<FileSystemEntity>> _disposer;
 
         public FileWatcherObservable(string path)
@@ -60,17 +61,20 @@ namespace FileWatcher
             }
         }
 
-        public override void Publish()
+        public override IDisposable Publish()
         {
-            switch (State)
+            lock (_lock)
             {
-                case ObservableState.Disposed:
-                    throw new ObjectDisposedException("All observers already disposed");
-                case ObservableState.Producing:
-                    throw new PublishingStartedException("Publishing already started");
-                default:
-                    WorkingThread.Start();
-                    break;
+                switch (State)
+                {
+                    case ObservableState.Disposed:
+                        throw new ObjectDisposedException("All observers already disposed");
+                    case ObservableState.Producing:
+                        throw new PublishingStartedException("Publishing already started");
+                    default:
+                        WorkingThread.Start();
+                        return _disposer.Value;
+                }
             }
         }
 

@@ -39,7 +39,11 @@ namespace ReactivePlatform
             public void Dispose()
             {
                 _cancellationToken.RequestCancellation(); //request for cancellation
-                ForceEnqueueLast();
+                lock(_lock)
+                {
+                    _executionQueue.Clear();
+                }
+                _manualResetEvent.Set();
                 _workingThread.Join(); //wait when last executions will be done
                 _manualResetEvent.Dispose(); //we can dispose the last element
             }
@@ -47,15 +51,6 @@ namespace ReactivePlatform
             public void EnqueueNext(T value) => Enqueue(ObserverItem.FromValue(value));
             public void EnqueueError(Exception exception) => Enqueue(ObserverItem.FromException(exception));
             public void EnqueueLast() => Enqueue(ObserverItem.FromLast());
-
-            private void ForceEnqueueLast()
-            {
-                lock (_lock)
-                {
-                    _executionQueue.Clear();
-                    EnqueueLast();
-                }
-            }
 
             private void Enqueue(ObserverItem item)
             {

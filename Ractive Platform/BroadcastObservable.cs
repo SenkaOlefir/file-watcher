@@ -5,14 +5,14 @@ namespace ReactivePlatform
 {
     public interface IBroadcastObservable<T> : IObservable<T>
     {
-        void Publish();
+        IDisposable Publish();
     }
 
     public abstract class BroadcastObservable<T> : Observable<T>, IBroadcastObservable<T>
     {
         protected IList<ObserverWrapper> Subscribers = new List<ObserverWrapper>();
 
-        public abstract void Publish();
+        public abstract IDisposable Publish();
 
         //closure here that will cause of additional allocation in heap
         //we need use foreach loop to avoid this
