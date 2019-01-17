@@ -14,6 +14,8 @@ namespace FileWatcher
         public FileWatcherObservable(string path)
         {
             _path = path;
+            //Composite disposer will stop producing value sequence for all subscribers
+            //We can implement another one, if we need it 
             _disposer = new Lazy<CompositeObservableDisposer<FileSystemEntity>>(() =>
                 new CompositeObservableDisposer<FileSystemEntity>(this));
 
